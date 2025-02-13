@@ -1,4 +1,6 @@
 import * as Three from "three";
+import { SimplexNoise } from "three/examples/jsm/Addons.js";
+import { RNG } from "../utils/RNG";
 
 const geometry = new Three.BoxGeometry(1, 1, 1);
 const material = new Three.MeshLambertMaterial({ color: 0x00d000 });
@@ -12,30 +14,66 @@ export class World extends Three.Group {
    */
   data = [];
 
+  params = {
+    seed: 0,
+    terrain: {
+      scale: 30,
+      magnitude: 0.5,
+      offset: 0.2,
+    },
+  };
+
   constructor(size = { width: 64, height: 32 }) {
     super();
     this.size = size;
   }
 
   generate() {
-    this.generateTerrain();
+    const rng = new RNG(this.params.seed);
+    this.initializeTerrain();
+    this.generateTerrain(rng);
     this.generateMeshes();
   }
 
-  // Generate the terrain data for the world
-  generateTerrain() {
+  initializeTerrain() {
     this.data = [];
     for (let x = 0; x < this.size.width; x++) {
       const slice = [];
       for (let y = 0; y < this.size.height; y++) {
         const row = [];
         for (let z = 0; z < this.size.width; z++) {
-          row.push({ id: 1, instanceId: null });
+          row.push({
+            id: Math.random() > this.threshold ? 1 : 0,
+            instanceId: null,
+          });
         }
 
         slice.push(row);
       }
       this.data.push(slice);
+    }
+  }
+
+  // Generate the terrain data for the world
+  generateTerrain(rng) {
+    const simplex = new SimplexNoise(rng);
+    for (let x = 0; x < this.size.width; x++) {
+      for (let z = 0; z < this.size.width; z++) {
+        const value = simplex.noise(
+          x / this.params.terrain.scale,
+          z / this.params.terrain.scale
+        );
+
+        const scaledNoise =
+          this.params.terrain.offset + this.params.terrain.magnitude * value;
+
+        let height = Math.floor(this.size.height * scaledNoise);
+        height = Math.max(0, Math.min(height, this.size.height - 1));
+
+        for (let y = 0; y <= height; y++) {
+          this.setBlockId(x, y, z, 1);
+        }
+      }
     }
   }
 
