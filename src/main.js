@@ -72,6 +72,7 @@ function animate() {
 // Event listeners
 window.addEventListener("resize", handleResize);
 
+//Invokers
 // Initialize scene and start animation
 setupLights();
 createUI(world);
