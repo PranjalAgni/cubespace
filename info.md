@@ -4,3 +4,4 @@ Understanding of Three.js
 [] Camera
 [] Scene
 [] GLB formats
+[] Implementing path finding
