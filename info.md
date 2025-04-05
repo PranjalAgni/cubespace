@@ -5,3 +5,4 @@ Understanding of Three.js
 [] Scene
 [] GLB formats
 [] Implementing path finding
+[] Working on the game
