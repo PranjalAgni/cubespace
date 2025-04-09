@@ -6,3 +6,4 @@ Understanding of Three.js
 [] GLB formats
 [] Implementing path finding
 [] Working on the game
+[] Do the implementation
