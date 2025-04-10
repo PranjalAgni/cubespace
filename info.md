@@ -7,3 +7,4 @@ Understanding of Three.js
 [] Implementing path finding
 [] Working on the game
 [] Do the implementation
+[] Too much work 🥹
