@@ -8,3 +8,4 @@ Understanding of Three.js
 [] Working on the game
 [] Do the implementation
 [] Too much work 🥹
+[] AI is very powerfull
