@@ -9,3 +9,5 @@ Understanding of Three.js
 [] Do the implementation
 [] Too much work 🥹
 [] AI is very powerfull
+[] Friends sis wedding done
+
